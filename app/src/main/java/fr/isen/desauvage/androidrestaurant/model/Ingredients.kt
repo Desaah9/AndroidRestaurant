@@ -1,4 +1,4 @@
-package fr.isen.desauvage.androideresaturant.model
+package fr.isen.desauvage.androidrestaurant.model
 
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable

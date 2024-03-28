@@ -7,21 +7,21 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
-import coil.compose.rememberImagePainter
 import coil.request.ImageRequest
-import com.google.gson.Gson
-import fr.isen.desauvage.androidrestaurant.ui.theme.AndroidRestaurantTheme
 import fr.isen.desauvage.androidrestaurant.model.Items
+import fr.isen.desauvage.androidrestaurant.ui.theme.AndroidRestaurantTheme
+import com.google.gson.Gson
 
 class DetailActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,10 +54,9 @@ fun DetailContent(selectedDish: Items) {
         Text(
             text = selectedDish.nameFr ?: "",
             fontSize = 35.sp,
-            color = Color.White, // couleur titre plat
+            color = Color.White,
             modifier = Modifier.padding(bottom = 16.dp)
         )
-        // Carrousel horizontal pour les images
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
@@ -68,7 +67,6 @@ fun DetailContent(selectedDish: Items) {
                 ImageItem(url = imageUrl)
             }
         }
-        // Afficher les ingrédients du plat
         if (selectedDish.ingredients.isNotEmpty()) {
             Text(
                 text = "Ingrédients : ${selectedDish.ingredients.joinToString(", ") { it.nameFr ?: "" }}",
@@ -76,8 +74,6 @@ fun DetailContent(selectedDish: Items) {
                 color = Color.White,
             )
         }
-
-        // Afficher les prix du plat pour chaque taille disponible
         if (selectedDish.prices.isNotEmpty()) {
             Text(
                 text = "Prix :",
@@ -94,16 +90,26 @@ fun DetailContent(selectedDish: Items) {
                 )
             }
         }
+
+        // Ajout du sélecteur de quantité
+        var quantity by remember { mutableStateOf(0) }
+        QuantitySelector(quantity, onQuantityChanged = { newQuantity ->
+            quantity = newQuantity
+        })
     }
 }
 
 @Composable
 fun ImageItem(url: String) {
-    val painter =
-        rememberAsyncImagePainter(ImageRequest.Builder(LocalContext.current).data(url).apply(block = fun ImageRequest.Builder.() {
-            placeholder(R.drawable.lost_foreground)
-            error(R.drawable.lost_foreground)
-        }).build())
+    val painter = rememberAsyncImagePainter(
+        ImageRequest.Builder(LocalContext.current)
+            .data(url)
+            .apply {
+                placeholder(R.drawable.lost_foreground)
+                error(R.drawable.lost_foreground)
+            }
+            .build()
+    )
     androidx.compose.foundation.Image(
         painter = painter,
         contentDescription = null,
@@ -113,3 +119,40 @@ fun ImageItem(url: String) {
         alignment = Alignment.Center
     )
 }
+
+@Composable
+fun QuantitySelector(quantity: Int, onQuantityChanged: (Int) -> Unit) {
+    val beigeColor = Color(android.graphics.Color.parseColor("#E1D2B8"))
+
+    Row(
+        modifier = Modifier
+            .padding(8.dp)
+            .background(Color(android.graphics.Color.parseColor("#1F3855"))),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Button(
+            onClick = { if (quantity > 0) onQuantityChanged(quantity - 1) },
+            colors = ButtonDefaults.buttonColors(Color(android.graphics.Color.parseColor("#E1D2B8"))),
+            modifier = Modifier.size(40.dp)
+        ) {
+            Text("-", color = Color(android.graphics.Color.parseColor("#1F3855")))
+        }
+
+        Text(
+            text = quantity.toString(),
+            color = beigeColor,
+            modifier = Modifier
+                .padding(horizontal = 8.dp)
+                .align(Alignment.CenterVertically)
+        )
+
+        Button(
+            onClick = { onQuantityChanged(quantity + 1) },
+            colors = ButtonDefaults.buttonColors(Color(android.graphics.Color.parseColor("#E1D2B8"))),
+            modifier = Modifier.size(40.dp)
+        ) {
+            Text("+", color = Color(android.graphics.Color.parseColor("#1F3855")))
+        }
+    }
+}
+

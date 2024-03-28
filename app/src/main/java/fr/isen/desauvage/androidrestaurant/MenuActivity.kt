@@ -129,7 +129,7 @@ fun ImageComponent(
     )
 }
 
-@Composable
+/*@Composable
 fun QuantitySelector(quantity: Int, onQuantityChange: (Int) -> Unit) {
     Row(
         verticalAlignment = Alignment.CenterVertically
@@ -158,7 +158,7 @@ fun QuantitySelector(quantity: Int, onQuantityChange: (Int) -> Unit) {
             )
         }
     }
-}
+}*/
 
 @Composable
 fun DishRowWithPrice(item: Items, goToDetail: (Items) -> Unit) {
@@ -220,34 +220,34 @@ fun DishRowWithPrice(item: Items, goToDetail: (Items) -> Unit) {
 
             }
 
-            }
         }
     }
+}
 
 
 
-    @Composable
-    fun MenuContent(
-        category: String,
-        itemsState: SnapshotStateList<Items>,
-        goToDetail: (Items) -> Unit
+@Composable
+fun MenuContent(
+    category: String,
+    itemsState: SnapshotStateList<Items>,
+    goToDetail: (Items) -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(android.graphics.Color.parseColor("#E1D2B8")))
+            .padding(16.dp)
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color(android.graphics.Color.parseColor("#E1D2B8")))
-                .padding(16.dp)
-        ) {
-            Text(
-                text = category,
-                fontSize = 32.sp,
-                fontWeight = FontWeight.Bold,
-                fontFamily = FontFamily.Serif,
-                color = Color(android.graphics.Color.parseColor("#1F3855")),
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(8.dp)
-            )
+        Text(
+            text = category,
+            fontSize = 32.sp,
+            fontWeight = FontWeight.Bold,
+            fontFamily = FontFamily.Serif,
+            color = Color(android.graphics.Color.parseColor("#1F3855")),
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(8.dp)
+        )
 
-            DishListComponent(dishes = itemsState, goToDetail = goToDetail)
-        }
+        DishListComponent(dishes = itemsState, goToDetail = goToDetail)
     }
+}

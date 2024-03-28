@@ -213,33 +213,11 @@ fun DishRowWithPrice(item: Items, goToDetail: (Items) -> Unit) {
                         text = "${price.price} €",
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Color(android.graphics.Color.parseColor("#E1D2B8")),
+                        color = Color.Gray,
                         modifier = Modifier.padding(start = 8.dp, top = 4.dp)
                     )
                 }
 
-                //Sélecteur de quantité
-                 Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(top = 8.dp)
-                ) {
-                    Text(
-                        text = "T'en veux combien : ",
-                        fontSize = 16.sp,
-                        color = Color(android.graphics.Color.parseColor("E1D2B8"))
-                    )
-                    Spacer(modifier  = Modifier.width(8.dp))
-                    QuantitySelector(quantity = quantity, onQuantityChange = {quantity = it})
-
-                }
-                //Afficher le prix total
-                /*Text(
-                    text = "Prix Total: ${(((quantity * item.prices.getOrNull(0)?.price) ?: 0))} €",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(android.graphics.Color.parseColor("#E1D2B8")),
-                    modifier = Modifier.padding(start = 8.dp, top = 4.dp)
-                )*/
             }
 
             }

@@ -7,12 +7,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -122,7 +124,6 @@ fun ImageItem(url: String) {
 
 @Composable
 fun QuantitySelector(quantity: Int, onQuantityChanged: (Int) -> Unit) {
-    val beigeColor = Color(android.graphics.Color.parseColor("#E1D2B8"))
 
     Row(
         modifier = Modifier
@@ -140,7 +141,7 @@ fun QuantitySelector(quantity: Int, onQuantityChanged: (Int) -> Unit) {
 
         Text(
             text = quantity.toString(),
-            color = beigeColor,
+            color = Color(android.graphics.Color.parseColor("#E1D2B8")),
             modifier = Modifier
                 .padding(horizontal = 8.dp)
                 .align(Alignment.CenterVertically)
@@ -153,6 +154,19 @@ fun QuantitySelector(quantity: Int, onQuantityChanged: (Int) -> Unit) {
         ) {
             Text("+", color = Color(android.graphics.Color.parseColor("#1F3855")))
         }
+
+    }
+    Spacer(modifier = Modifier.width(16.dp))
+
+    Button(
+        onClick = { /*TODO*/ },
+        colors = ButtonDefaults.buttonColors(Color(android.graphics.Color.parseColor("#E1D2B8"))),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+            .height(60.dp)
+    ) {
+        Text("Valider le panier", color = Color(android.graphics.Color.parseColor("#1F3855")))
     }
 }
 

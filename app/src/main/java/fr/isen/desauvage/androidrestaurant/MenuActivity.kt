@@ -129,37 +129,6 @@ fun ImageComponent(
     )
 }
 
-/*@Composable
-fun QuantitySelector(quantity: Int, onQuantityChange: (Int) -> Unit) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        IconButton(
-            onClick = { if (quantity > 1) onQuantityChange(quantity - 1) },
-            modifier = Modifier.size(32.dp)
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_remove),
-                contentDescription = "Decrease quantity"
-            )
-        }
-        Text(
-            text = quantity.toString(),
-            fontSize = 16.sp,
-            color = Color(android.graphics.Color.parseColor("#E1D2B8"))
-        )
-        IconButton(
-            onClick = { onQuantityChange(quantity + 1) },
-            modifier = Modifier.size(32.dp)
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_add),
-                contentDescription = "Increase quantity"
-            )
-        }
-    }
-}*/
-
 @Composable
 fun DishRowWithPrice(item: Items, goToDetail: (Items) -> Unit) {
     //Déclaration d'une variable d'état pour la quantité sélectionnée
